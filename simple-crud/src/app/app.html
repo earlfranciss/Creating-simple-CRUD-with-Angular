@@ -1,0 +1,35 @@
+<main class="main">
+  <div class="content">
+    <div class="container mt-5">
+      <div class="flex flex-row justify-content-between mb-2">
+        <h2>Users</h2>
+        <app-add />
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th scope="col">User Code</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of sampleUsers">
+                <th scope="row">{{ user.userCode }}</th>
+                <td>{{ user.firstName }}</td>
+                <td>{{ user.lastName }}</td>
+                <td class="flex gap-3">
+                  <app-edit />
+                  <app-delete />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
