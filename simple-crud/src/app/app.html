@@ -17,13 +17,13 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let user of sampleUsers">
+              <tr *ngFor="let user of users">
                 <th scope="row">{{ user.userCode }}</th>
                 <td>{{ user.firstName }}</td>
                 <td>{{ user.lastName }}</td>
                 <td class="flex gap-3">
                   <app-edit />
-                  <app-delete />
+                  <app-delete  [deleteUserCode]="user.userCode" (deleteUser)="OnClickDelete($event)"/>
                 </td>
               </tr>
             </tbody>

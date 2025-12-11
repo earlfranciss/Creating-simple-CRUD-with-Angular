@@ -15,9 +15,7 @@ import { Add } from "./modals/add/add";
 })
 export class App {
   protected readonly title = signal('simple-crud');
-
-  
-sampleUsers: user[] = [
+  sampleUsers: user[] = [
     {
       userCode: '001',
       firstName: 'Jonathan',
@@ -44,4 +42,12 @@ sampleUsers: user[] = [
       lastName: 'Yonezu',
     },
   ];
+
+
+  users: any[] = this.sampleUsers;
+
+  onClickDelete(userCode: string) {
+    const foundUser = this.sampleUsers.find(x => x.userCode === userCode);
+    console.log('User Code', foundUser)
+  }
 }
