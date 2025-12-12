@@ -2,19 +2,19 @@ import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { user } from './user-model';
 import { CommonModule } from '@angular/common';
-import { Edit } from "./modals/edit/edit";
-import { Delete } from "./modals/delete/delete";
-import { Add } from "./modals/add/add";
-
+import { Edit } from './modals/edit/edit';
+import { Add } from './modals/add/add';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, CommonModule, Edit, Delete, Add],
+  imports: [RouterOutlet, CommonModule, Edit, Add],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
 })
 export class App {
   protected readonly title = signal('simple-crud');
+  showAddModal = false;
+  showEditModal = false;
   sampleUsers: user[] = [
     {
       userCode: '001',
@@ -43,11 +43,24 @@ export class App {
     },
   ];
 
-
   users: any[] = this.sampleUsers;
+  selectedUser: user | null = null;
 
   onClickDelete(userCode: string) {
-    const foundUser = this.sampleUsers.find(x => x.userCode === userCode);
-    console.log('User Code', foundUser)
+    this.users = this.users.filter((user) => user.userCode !== userCode);
+  }
+
+  onClickOpenAdd(userCode: string) {
+    const foundUser = this.users.find((x) => x.userCode === userCode);
+    console.log('User Code', foundUser);
+  }
+
+  onClickOpenEdit(userCode: string) {
+    const foundUser = this.users.find((x) => x.userCode === userCode);
+    console.log('User Code', foundUser);
+
+    if (foundUser) {
+      this.selectedUser = foundUser;
+    }
   }
 }

@@ -1,1 +1,52 @@
-<button type="button" class="btn btn-light">Edit</button>
+<button type="button" class="btn btn-light" (click)="OpenModal()">Edit</button>
+
+<!-- Modal -->
+@if (showEditModal) {
+<div class="modal-backdrop fade show"></div>
+
+<div class="modal fade show d-block" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form [formGroup]="editForm" (ngSubmit)="getInfo()">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add User</h5>
+                    <button type="button" class="btn-close" (click)="CloseModal()"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="mb-2">
+                        <label for="UserCode">User Code</label>
+                        <input type="text" id="UserCode" class="form-control mt-2" aria-describedby="userCode "
+                            formControlName="usercode" />
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="FirstName">First Name</label>
+                        <input type="text" id="FirstName" class="form-control mt-2 disabled"
+                            aria-describedby="firstName " formControlName="firstname" />
+                        <div *ngIf="editForm.get('firstname')?.errors?.['required'] && editForm.get('firstname')?.touched"
+                            class="text-danger">
+                            First Name is required.
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="LastName">Last Name</label>
+                        <input type="text" id="LastName" class="form-control mt-2 disabled" aria-describedby="lastName "
+                            formControlName="lastname" />
+                        <div *ngIf="editForm.get('lastname')?.errors?.['required'] && editForm.get('lastname')?.touched"
+                            class="text-danger">
+                            Last Name is required.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" (click)="CloseModal()">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+}

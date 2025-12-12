@@ -3,7 +3,7 @@
     <div class="container mt-5">
       <div class="flex flex-row justify-content-between mb-2">
         <h2>Users</h2>
-        <app-add />
+        <app-add/>
       </div>
       <div class="card">
         <div class="card-body">
@@ -22,8 +22,8 @@
                 <td>{{ user.firstName }}</td>
                 <td>{{ user.lastName }}</td>
                 <td class="flex gap-3">
-                  <app-edit />
-                  <app-delete  [deleteUserCode]="user.userCode" (deleteUser)="OnClickDelete($event)"/>
+                  <app-edit [editData]="selectedUser"/>
+                  <button type="button" class="btn btn-danger" (click)="onClickDelete(user.userCode)">Delete</button>
                 </td>
               </tr>
             </tbody>
