@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output,  } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { user } from '../../user-model';
 
 @Component({
   selector: 'app-edit',
@@ -10,41 +11,43 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 })
 export class Edit {
   showEditModal = false;
-  @Output() OpenModalButton = new EventEmitter<string>();
-  editForm: FormGroup = new FormGroup({
-    usercode: new FormControl<any>({ value: '', disabled: true }),
-    firstname: new FormControl<any>('', [Validators.required]),
-    lastname: new FormControl<any>('', [Validators.required]),
+
+  @Output() save = new EventEmitter<user>();
+
+  editForm = new FormGroup({
+    usercode: new FormControl({ value: '', disabled: true }),
+    firstname: new FormControl('', Validators.required),
+    lastname: new FormControl('', Validators.required),
   });
 
-  @Input() set editData(value: any) {
-    if (value){
+  private currentUser!: user;
+
+  @Input() set editData(value: user | null) {
+    if (value) {
+      this.currentUser = value;
       this.showEditModal = true;
+
       this.editForm.patchValue({
         usercode: value.userCode,
         firstname: value.firstName,
-        lastname: value.lastName
-      })
+        lastname: value.lastName,
+      });
     }
-  }
-  OpenModal() {
-    this.OpenModalButton.emit('');
-    this.showEditModal = true;
-
   }
 
   CloseModal() {
-  this.showEditModal = false;
-}
-
-  getInfo() {
-    const value = this.editForm.value;
-
-    console.log('User Code:', value.usercode);
-    console.log('First Name:', value.firstname);
-    console.log('Last Name:', value.lastname);  
-
-
+    this.showEditModal = false;
   }
 
+  onSave() {
+    if (this.editForm.invalid) return;
+
+    this.save.emit({
+      userCode: this.currentUser.userCode,
+      firstName: this.editForm.get('firstname')!.value!,
+      lastName: this.editForm.get('lastname')!.value!,
+    });
+
+    this.CloseModal();
+  }
 }

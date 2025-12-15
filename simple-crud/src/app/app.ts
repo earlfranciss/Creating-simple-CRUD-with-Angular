@@ -7,7 +7,7 @@ import { Add } from './modals/add/add';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, CommonModule, Edit, Add],
+  imports: [ CommonModule, Edit, Add],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
@@ -55,12 +55,27 @@ export class App {
     console.log('User Code', foundUser);
   }
 
-  onClickOpenEdit(userCode: string) {
-    const foundUser = this.users.find((x) => x.userCode === userCode);
-    console.log('User Code', foundUser);
 
-    if (foundUser) {
-      this.selectedUser = foundUser;
+  onClickOpenEdit(user: user) {
+    this.selectedUser = { ...user };
+  }
+
+  onSaveEdit(updatedUser: user) {
+    this.users = this.users.map((u) =>
+      u.userCode === updatedUser.userCode ? updatedUser : u
+    );
+  }
+
+  onAddUser(newUser: user) {
+    const exists = this.users.some(
+      (u) => u.userCode === newUser.userCode
+    );
+
+    if (exists) {
+      alert('User Code already exists!');
+      return;
     }
+
+    this.users = [...this.users, newUser];
   }
 }
